@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="diary-home">
+    <header class="diary-header">
+        <h1>Мой личный дневник</h1>
+        <p class="subtitle">Записывайте мысли, события и важные моменты вашей жизни</p>
+    </header>
+
+
+    <!-- Действия для авторизованного пользователя -->
+    {% if user.is_authenticated %}
+        <div class="home-actions">
+            <a href="{% url 'diary:entry_create' %}" class="btn btn-primary btn-lg">
+                Написать новую запись
+            </a>
+            <a href="{% url 'diary:entry_list' %}" class="btn btn-outline-secondary btn-lg">
+                Просмотреть все записи
+            </a>
+        </div>
+
+        {% if latest_entry %}
+            <section class="latest-entry">
+                <h2>Последняя запись</h2>
+                <div class="entry-preview">
+                    <h3>
+                        <a href="{% url 'diary:entry_detail' latest_entry.pk %}">
+                            {{ latest_entry.title|default:"Без названия" }}
+                        </a>
+                    </h3>
+                    <p class="entry-meta">
+                        Создано: {{ latest_entry.created_at|date:"d M Y в H:i" }}
+                    </p>
+                    <div class="entry-snippet">
+                        {{ latest_entry.content|truncatewords:30|linebreaksbr }}
+                    </div>
+                </div>
+            </section>
+        {% else %}
+            <div class="no-entries">
+                <p>Вы ещё не сделали ни одной записи. Начните с создания первой!</p>
+            </div>
+        {% endif %}
+
+        <footer class="home-footer">
+            <small>
+                <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+            </small>
+        </footer>
+    {% else %}
+        <!-- Контент для гостя -->
+        <div class="guest-message">
+            <h2>Добро пожаловать!</h2>
+            <p>Чтобы вести дневник, нужно войти в аккаунт или зарегистрироваться.</p>
+
+            <div class="auth-actions">
+                <a href="{% url 'login' %}" class="btn btn-primary">
+                    Войти
+                </a>
+                <a href="{% url 'register' %}" class="btn btn-outline-secondary">
+                    Зарегистрироваться
+                </a>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Зачем регистрироваться?</strong></p>
+                <ul>
+                    <li>Сохранять записи в защищённом месте</li>
+                    <li>Получать доступ с любого устройства</li>
+                    <li>Организовывать мысли и события</li>
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ entry.title }} | Дневник{% endblock %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <article>
+        <h1>{{ entry.title }}</h1>
+        <p class="text-muted">
+            Создано: {{ entry.created_at|date:"d.m.Y H:i" }}
+            {% if entry.updated_at != entry.created_at %}
+                (обновлено: {{ entry.updated_at|date:"d.m.Y H:i" }})
+            {% endif %}
+        </p>
+        <div class="entry-content">
+            {{ entry.content }}
+        </div>
+    </article>
+
+    <hr class="my-4">
+
+    <div class="d-flex gap-2">
+        <a href="{% url 'diary:entry_list' %}" class="btn btn-secondary">К списку записей</a>
+        <a href="{% url 'diary:entry_edit' entry.pk %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'diary:entry_delete' entry.pk %}" class="btn btn-danger">Удалить</a>
+    </div>
+</div>
+{% endblock %}

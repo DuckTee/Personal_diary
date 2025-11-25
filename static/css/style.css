@@ -1,0 +1,23 @@
+/* Персиковая шапка */
+.bg-peach {
+    background-color: #4b2e83; /* Персиковый оттенок */
+    color: #fff;
+}
+
+/* Цвета текста в шапке (белый) */
+.navbar-light .navbar-brand,
+.navbar-light .nav-link {
+    color: #fff !important;
+}
+
+/* Активная ссылка в меню */
+.navbar-light .nav-link.active {
+    color: #fff !important; /* Красный акцент */
+}
+
+/* Подвал */
+.footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+

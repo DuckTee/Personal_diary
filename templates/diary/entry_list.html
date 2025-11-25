@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Мои записи | Дневник{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Форма поиска -->
+    <form method="get" class="mb-4">
+        <div class="input-group">
+            <input
+                type="text"
+                name="q"
+                class="form-control"
+                placeholder="Искать по заголовку или тексту..."
+                value="{{ query }}"
+            >
+            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+            <!-- Кнопка сброса поиска -->
+            {% if query %}
+                <a href="{% url 'diary:entry_list' %}" class="btn btn-outline-danger">Сбросить</a>
+            {% endif %}
+        </div>
+    </form>
+
+    <!-- Список записей -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Мои записи</h1>
+        <a href="{% url 'diary:entry_create' %}" class="btn btn-primary">Новая запись</a>
+    </div>
+
+    {% for entry in entries %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ entry.title }}</h5>
+                <p class="card-text text-muted">{{ entry.content|truncatewords:30 }}</p>
+                <small class="text-muted">Создано: {{ entry.created_at|date:"d.m.Y H:i" }}</small>
+                <div class="mt-2">
+                    <a href="{% url 'diary:entry_detail' entry.pk %}" class="btn btn-sm btn-outline-primary">Читать</a>
+                    <a href="{% url 'diary:entry_edit' entry.pk %}" class="btn btn-sm btn-outline-warning">Редактировать</a>
+                    <a href="{% url 'diary:entry_delete' entry.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>
+            {% if query %}
+                По запросу «{{ query }}» ничего не найдено.
+            {% else %}
+                У вас пока нет записей.
+            {% endif %}
+        </p>
+    {% endfor %}
+
+    <!-- Пагинация -->
+    {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}">Назад</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">{{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}">Вперёд</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

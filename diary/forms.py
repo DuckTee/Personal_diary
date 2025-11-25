@@ -8,12 +8,12 @@ class EntryForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите заголовок'
+                'placeholder': 'Введите заголовок...'
             }),
             'content': forms.Textarea(attrs={
                 'class': 'form-control',
-                'rows': 6,
-                'placeholder': 'Напишите что-нибудь...'
+                'rows': 8,
+                'placeholder': 'Начните писать...'
             })
         }
         labels = {

@@ -19,7 +19,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    #path('', home, name='home'),
-    path("admin/", admin.site.urls),
+    # 1. Админ‑панель
+    path('admin/', admin.site.urls),
+
+    # 2. Аутентификация (стандартные URL: login, logout и др.)
     path('user/', include('django.contrib.auth.urls')),
+
+    # 3. Кастомные URL для пользователя (регистрация и т.д.)
+    path('user/', include('user.urls', namespace='user')),
+
+    # 4. Основной функционал дневника (корневой URL)
+    path('', include('diary.urls'), name='diary'),
 ]
