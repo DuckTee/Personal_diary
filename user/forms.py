@@ -2,6 +2,7 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 
+
 class UserRegisterForm(forms.ModelForm):
     """
     Форма регистрации пользователя
@@ -22,14 +23,16 @@ class UserRegisterForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ("email", "first_name", "last_name")
+        fields = ("username", "email", "first_name", "last_name")
         widgets = {
             "email": forms.EmailInput(attrs={"placeholder": _("example@example.com")}),
+            "username": forms.TextInput(attrs={"placeholder": _("Введите username")}),
         }
         labels = {
             "email": _("Email"),
             "first_name": _("Имя"),
             "last_name": _("Фамилия"),
+            "username": _("Username"),
         }
 
     def clean_password1(self):

@@ -2,9 +2,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Личный дневник{% endblock %}</title>
+
 
     <meta name="description" content="Личный дневник — ваши мысли и записи в одном месте">
     <!-- Bootstrap 5 -->
@@ -16,7 +17,7 @@
     <!-- Шапка -->
     <header class="navbar navbar-expand-md navbar-light bg-peach fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'diary:entry_list' %}">
+            <a class="navbar-brand fw-bold" href="{% url 'diary:entry_list' %}" >
                 Личный дневник
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,8 +25,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
+                    <!-- Главная -->
                     <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'entry_list' %}active{% endif %}"
+                        <a class="nav-link {% if request.resolver_match.url_name == 'diary:home' %}active{% endif %}"
+                           href="{% url 'diary:home' %}">
+                            Главная
+                        </a>
+                    </li>
+
+                    <!-- Посмотреть все записи -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'diary:entry_list' %}active{% endif %}"
                            href="{% url 'diary:entry_list' %}">
                             Посмотреть все записи
                         </a>
@@ -42,7 +52,19 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                                    <form method="post" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="btn btn-primary w-100"
+                                                style="background-color: #8B00FF;
+                                                       border-color: #8B00FF;
+                                                       color: white;
+                                                       box-shadow: none;
+                                                       margin-top: 15px;
+                                                       font-weight: 500;">
+                                            Выход
+                                        </button>
+                                    </form>
                                 </li>
                             </ul>
                         </li>
