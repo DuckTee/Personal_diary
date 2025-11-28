@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="register-container">
+    <h1 class="text-center mb-4" style="color: #4b2e83;">Вход в систему</h1>
+
+    <div style="height: 30px;"></div>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <!-- Кнопка входа -->
+        <button type="submit"
+                class="btn btn-primary btn-lg w-100"
+                style="background-color: #8B00FF;
+                       border-color: #8B00FF;
+                       color: white;
+                       box-shadow: none;
+                       margin-top: 15px;
+                       font-weight: 500;">
+            Войти
+        </button>
+    </form>
+
+<div style="height: 30px;"></div>
+
+<p><a href="{% url 'user:register' %}"
+       style="color: #4b2e83; text-decoration: none;">
+    Нет аккаунта? Зарегистрироваться
+</a></p>
+{% endblock %}
+

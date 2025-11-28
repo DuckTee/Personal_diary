@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="diary-home mt-4">
+
+    <header class="diary-header">
+        <h1 style="color: #4b2e83;">Мой личный дневник</h1>
+        <p class="subtitle">Записывайте мысли, события и важные моменты вашей жизни</p>
+        <div class="info-panel p-4 rounded mb-4" >
+            <h4 style="color: #4b2e83;">Что такое личный дневник?</h4>
+            <p>
+                Личный дневник — это ваше приватное пространство для записей, размышлений и важных событий.
+                Здесь можно:
+            </p>
+            <ul >
+                <li>Фиксировать мысли и эмоции</li>
+                <li>Планировать дела и цели</li>
+                <li>Сохранять воспоминания о значимых моментах</li>
+                <li>Анализировать свой прогресс</li>
+            </ul>
+            <p class="text-muted">
+                Все записи доступны только вам — конфиденциальность гарантирована.
+            </p>
+        </div>
+    </header>
+
+    <div style="height: 30px;"></div>
+
+    <!-- Действия для авторизованного пользователя -->
+    {% if user.is_authenticated %}
+        <div class="home-actions d-flex justify-content-between mb-4">
+            <a href="{% url 'diary:entry_create' %}"
+               class="btn btn-primary btn-lg"
+               style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
+                Написать новую запись
+            </a>
+            <a href="{% url 'diary:entry_list' %}"
+               class="btn btn-primary btn-lg"
+               style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
+                Просмотреть все записи
+            </a>
+        </div>
+
+    <div style="height: 20px;"></div>
+
+        {% if latest_entry %}
+            <!-- Последняя запись -->
+            <section class="latest-entry mb-4">
+                <h2 style="color: #4b2e83;">Последняя запись</h2>
+                <div class="entry-preview" >
+                    <h3>
+                        <a href="{% url 'diary:entry_detail' latest_entry.pk %}"
+                           style="color: #4b2e83; font-size: 20px;">
+                            {{ latest_entry.title|default:"Без названия" }}
+                        </a>
+                    </h3>
+                    <p class="entry-meta">
+                        Создано: {{ latest_entry.created_at|date:"d M Y в H:i" }}
+                    </p>
+                    <div class="entry-snippet">
+                        {{ latest_entry.content|truncatewords:30|linebreaksbr }}
+                    </div>
+                </div>
+            </section>
+
+        {% else %}
+            <!-- Сообщение, если записей нет -->
+            <div class="no-entries mb-4">
+                <p>Вы ещё не сделали ни одной записи. Начните с создания первой!</p>
+            </div>
+        {% endif %}
+
+    <div style="height: 30px;"></div>
+
+        <footer class="home-footer">
+            <section class="tips mt-4">
+                <h3 style="color: #4b2e83;">Как вести дневник эффективно?</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><strong style="color: #4b2e83;">Пишите регулярно:</strong> даже 5 минут в день дают результат.</li>
+                            <li><strong style="color: #4b2e83;">Будьте честны:</strong> дневник — место для искренних мыслей.</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><strong style="color: #4b2e83;">Не бойтесь ошибок:</strong> это не сочинение, а ваш поток сознания.</li>
+                            <li><strong style="color: #4b2e83;">Перечитывайте:</strong> через время вы увидите новые смыслы.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <div style="height: 200px;"></div>
+
+            <small>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button
+                        type="submit"
+                        class="btn btn-primary btn-lg"
+                        style="
+                            background-color: #8B00FF;
+                            border-color: #8B00FF;
+                            color: white;
+                            box-shadow: none;
+                        ">
+                        Выйти из аккаунта
+                    </button>
+                </form>
+            </small>
+        </footer>
+
+    {% else %}
+        <!-- Контент для гостя -->
+        <div class="guest-message">
+            <h2 style="color: #4b2e83;">Начать вести дневник</h2>
+            <p>Чтобы вести дневник, нужно войти в аккаунт или зарегистрироваться.</p>
+
+            <div class="auth-actions d-flex gap-3 mb-4">
+                <a href="{% url 'user:register' %}"
+                   class="btn btn-primary btn-lg"
+                   style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
+                    Зарегистрироваться
+                </a>
+                <a href="{% url 'login' %}"
+                   class="btn btn-primary btn-lg"
+                   style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
+                    Войти
+                </a>
+            </div>
+
+            <div class="info-box">
+                <p><strong style="color: #4b2e83;">Зачем регистрироваться?</strong></p>
+                <ul>
+                    <li>Сохранять записи в защищённом месте</li>
+                    <li>Получать доступ с любого устройства</li>
+                    <li>Организовывать мысли и события</li>
+                </ul>
+            </div>
+
+            <div style="height: 30px;"></div>
+
+            <div class="history-box bg-white p-4 rounded mt-4">
+                <h4 style="color: #4b2e83;">Немного истории</h4>
+                <p>
+                    Ведение дневников — древняя традиция. Ещё в античности люди записывали мысли на папирусах и пергаментах.
+                    Сегодня дневник — это цифровой инструмент для самопознания и организации жизни.
+                </p>
+                <small class="text-muted">
+                    Ваш дневник — продолжение этой традиции в XXI веке.
+                </small>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

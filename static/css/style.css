@@ -1,0 +1,31 @@
+/* Шапка */
+.bg-peach {
+    --bs-bg: #4b2e83 !important;
+    background-color: #4b2e83 !important;
+    color: #fff !important;
+}
+
+/* Текст в шапке */
+.navbar-light .navbar-brand,
+.navbar-light .nav-link {
+    color: #fff !important;
+}
+
+.navbar-light .nav-link.active {
+    color: #fff !important;
+}
+
+/* Подвал */
+.footer {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+}
+
+
+
+.body {
+    background-color: #E6E6FA; /* Лавандовый цвет */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}

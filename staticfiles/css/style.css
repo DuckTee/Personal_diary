@@ -1,0 +1,61 @@
+/* Шапка */
+.bg-peach {
+    --bs-bg: #4b2e83 !important;
+    background-color: #4b2e83 !important;
+    color: #fff !important;
+}
+
+/* Текст в шапке */
+.navbar-light .navbar-brand,
+.navbar-light .nav-link {
+    color: #fff !important;
+}
+
+.navbar-light .nav-link.active {
+    color: #fff !important;
+}
+
+/* Подвал */
+.footer {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+}
+
+/* КНОПКИ: 100% перекрытие стилей Bootstrap 5 */
+.diary-home .btn.btn-primary,
+.diary-home .btn.btn-outline-secondary {
+    --bs-btn-bg: #8B00FF !important;
+    --bs-btn-border-color: #8B00FF !important;
+    --bs-btn-hover-bg: #6A5ACD !important;
+    --bs-btn-hover-border-color: #6A5ACD !important;
+    
+    background-color: #8B00FF !important;
+    border-color: #8B00FF !important;
+    color: white !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: background-color 0.3s ease !important;
+}
+
+/* Для контурной кнопки: прозрачный фон */
+.diary-home .btn.btn-outline-secondary {
+    background-color: transparent !important;
+    color: #8B00FF !important;
+}
+
+/* Наведение */
+.diary-home .btn.btn-primary:hover,
+.diary-home .btn.btn-outline-secondary:hover {
+    background-color: #6A5ACD !important;
+    border-color: #6A5ACD !important;
+    color: white !important;
+}
+
+/* Фокусировка (убираем синюю обводку) */
+.diary-home .btn:focus,
+.diary-home .btn:active,
+.diary-home button:focus,
+.diary-home button:active {
+    outline: none !important;
+    box-shadow: none !important;
+}
