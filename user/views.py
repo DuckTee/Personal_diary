@@ -1,8 +1,10 @@
+from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.views import (LoginView,  # ← правильный импорт
+                                       LogoutView)
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView  # ← правильный импорт
-from django.contrib import messages
+
 from user.forms import UserRegisterForm
 from user.models import User
 
@@ -54,17 +56,7 @@ class LoginViewCustom(LoginView):
 
 
 class LogoutViewCustom(LogoutView):
-    """
-    Кастомное представление для выхода с перенаправлением на страницу входа
-    """
-
-    def dispatch(self, request, *args, **kwargs):
-        messages.info(request, "Вы вышли из системы.")
-        return super().dispatch(request, *args, **kwargs)
-
-
-class LogoutViewCustom(LogoutView):
-    next_page = reverse_lazy("login")
+    next_page = None  # По умолчанию нет редиректа
 
     def dispatch(self, request, *args, **kwargs):
         messages.info(request, "Вы вышли из системы.")

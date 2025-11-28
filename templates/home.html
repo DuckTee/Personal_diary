@@ -119,12 +119,12 @@
             <p>Чтобы вести дневник, нужно войти в аккаунт или зарегистрироваться.</p>
 
             <div class="auth-actions d-flex gap-3 mb-4">
-                <a href="{% url 'diary:entry_create' %}"
+                <a href="{% url 'user:register' %}"
                    class="btn btn-primary btn-lg"
                    style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
                     Зарегистрироваться
                 </a>
-                <a href="{% url 'diary:entry_create' %}"
+                <a href="{% url 'login' %}"
                    class="btn btn-primary btn-lg"
                    style="background-color: #8B00FF; border-color: #8B00FF; color: white; box-shadow: none;">
                     Войти
